@@ -1,0 +1,113 @@
+definitions:
+  handler.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  storage.Value:
+    properties:
+      expire_at:
+        type: integer
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: rytis.janceris@gmail.com
+    name: Rytis Jančeris
+  description: This is a simple key store application.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Key store API
+  version: "1.0"
+paths:
+  /api/v1/store:
+    get:
+      consumes:
+      - application/json
+      description: Get all values from the store
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/storage.Value'
+            type: array
+      summary: Get all values
+      tags:
+      - store
+    post:
+      consumes:
+      - application/json
+      description: Store value in the store
+      parameters:
+      - description: Value
+        in: body
+        name: value
+        required: true
+        schema:
+          $ref: '#/definitions/storage.Value'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/storage.Value'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Error'
+      summary: Store value
+      tags:
+      - store
+  /api/v1/store/{key}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete value from the store
+      parameters:
+      - description: Key
+        in: path
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete value
+      tags:
+      - store
+    get:
+      consumes:
+      - application/json
+      description: Get value from the store by key
+      parameters:
+      - description: Key
+        in: path
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/storage.Value'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Error'
+      summary: Get value by key
+      tags:
+      - store
+swagger: "2.0"
