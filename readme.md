@@ -15,3 +15,6 @@ Currently there are 4 endpoints available:
 * `GET /api/v1/store/{key}` - returns value for given key
 * `POST /api/v1/store` - creates or updates value for given key
 * `DELETE /api/v1/store/{key}` - deletes value for given key
+
+### API docs
+API docs are available [here](http://localhost:3000/docs/index.html)
